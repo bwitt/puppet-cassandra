@@ -4,6 +4,7 @@
 #
 # @return [string] The version string (e.g. 3.0.1).
 Facter.add('cassandrarelease') do
+  confine { Facter::Core::Execution.which('nodetool') }
   setcode do
     version = Facter::Core::Execution.execute('nodetool version')
     version.match(%r{\d+\.\d+\.\d+}).to_s if version && version != ''
